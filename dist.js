@@ -19785,25 +19785,33 @@ return jQuery;
 },{"backdash":2,"lodash":12}],14:[function(_dereq_,module,exports){
 module.exports={
   "name": "sprintly-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "backdash": "^1.1.2-2.4.1",
-    "supermodel": "git://github.com/wookiehangover/supermodel.git",
-    "lodash": "^2.4.1",
     "btoa": "^1.1.2",
-    "jquery": ">=1.8.0"
+    "jquery": ">=1.8.0",
+    "lodash": "^2.4.1",
+    "supermodel": "git://github.com/wookiehangover/supermodel.git"
   },
   "devDependencies": {
-    "browserify": "^4.2.0"
+    "browserify": "^4.2.0",
+    "faucet": "0.0.1",
+    "tape": "^2.13.3",
+    "testling": "^1.7.0",
+    "uglify-js": "^2.4.14"
   },
   "scripts": {
-    "build": "browserify index.js -o dist.js -s sprintly"
+    "test": "testling | faucet",
+    "build": "browserify index.js -o dist.js -s sprintly && cat dist.js | uglifyjs -cm > dist.min.js "
+  },
+  "testling": {
+    "files": "test/index.js"
   }
 }
 
 },{}],15:[function(_dereq_,module,exports){
 (function (process){
-exports.BASE_URL = process.env.BASE_URL || 'https://local.sprint.ly:9000/api'
+exports.BASE_URL = process.env.BASE_URL || 'https://sprint.ly/api'
 
 }).call(this,_dereq_("FWaASH"))
 },{"FWaASH":6}],16:[function(_dereq_,module,exports){
@@ -19912,7 +19920,7 @@ module.exports = Backbone.Model.extend({
     this.people = new People(null, { productId: attrs.id })
 
     // Use Supermodel to create a trackable Item model for this collection
-    var ItemModel = this.itemModel = Model.extend({
+    var ItemModel = this.ItemModel = Model.extend({
       idAttribute: 'number'
     })
 
@@ -19934,7 +19942,7 @@ module.exports = Backbone.Model.extend({
   },
 
   createItemsCollection: function(models) {
-    var ItemModel = this.itemModel
+    var ItemModel = this.ItemModel
 
     return new Items(models || [], {
       productId: this.get('id'),
