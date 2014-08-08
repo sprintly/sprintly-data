@@ -1,10 +1,10 @@
 var _ = require('lodash')
 var $ = require('jquery')
 var btoa = require('btoa')
-var Backbone = require('./sprintly/support/backbone')
-var basicAuth = require('./sprintly/support/basic-auth');
-var Products = require('./sprintly/products')
-var User = require('./sprintly/user')
+var Backbone = require('./lib/support/backbone')
+var basicAuth = require('./lib/support/basic-auth');
+var Products = require('./lib/products')
+var User = require('./lib/user')
 
 var version = require('./package.json').version
 
