@@ -1,23 +1,16 @@
 var _ = require('lodash')
 var $ = require('jquery')
 var btoa = require('btoa')
-var Backbone = require('backdash')
-
+var Backbone = require('./sprintly/support/backbone')
+var basicAuth = require('./sprintly/support/basic-auth');
 var Products = require('./sprintly/products')
 var User = require('./sprintly/user')
 
 var version = require('./package.json').version
 
 exports.createClient = function(email, apiKey) {
-  var authHeader = btoa(email + ":" + apiKey)
 
-  Backbone.ajax = function(options) {
-    return $.ajax(_.extend(options, {
-      headers: {
-        "Authorization": "Basic " + authHeader
-      }
-    }))
-  }
+  Backbone.ajax = basicAuth(email, apiKey);
 
   return {
     products: new Products(),
@@ -28,3 +21,4 @@ exports.createClient = function(email, apiKey) {
 }
 
 exports.VERSION = version
+

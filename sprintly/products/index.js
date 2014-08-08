@@ -1,4 +1,4 @@
-var Backbone = require('backdash')
+var Backbone = require('../support/backbone')
 var Product = require('./product')
 var config = require('../config')
 

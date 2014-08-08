@@ -1,9 +1,10 @@
 var qs = require('querystring');
-var Backbone = require('backdash')
+var Backbone = require('../support/backbone');
 var config = require('../config')
 var attachDeps = require('../mixins').attachDeps
+var Item = require('./item');
 
-module.exports = Backbone.Collection.extend({
+var Items = Backbone.Collection.extend({
 
   url: function() {
     var query = qs.stringify(this.config.toJSON())
@@ -30,3 +31,7 @@ module.exports = Backbone.Collection.extend({
 
 })
 
+Items.ITEM_TYPES = Item.ITEM_TYPES;
+Items.STAGES = Item.STAGES;
+
+module.exports = Items;

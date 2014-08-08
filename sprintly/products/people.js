@@ -1,4 +1,4 @@
-var Backbone = require('backdash')
+var Backbone = require('../support/backbone')
 var config = require('../config')
 var attachDeps = require('../mixins').attachDeps
 

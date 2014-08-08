@@ -1,14 +1,17 @@
 {
   "name": "sprintly-sdk",
   "version": "0.0.2",
+  "main": "index.js",
   "dependencies": {
-    "backdash": "^1.1.2-2.4.1",
+    "backbone-super-sync": "0.0.13",
+    "backbone": "1.1.2",
     "btoa": "^1.1.2",
     "jquery": ">=1.8.0",
     "lodash": "^2.4.1",
-    "supermodel": "git://github.com/wookiehangover/supermodel.git"
+    "supermodel": "git://github.com/pathable/supermodel.git"
   },
   "devDependencies": {
+    "aliasify": "^1.4.0",
     "browserify": "^4.2.0",
     "faucet": "0.0.1",
     "tape": "^2.13.3",
@@ -17,9 +20,23 @@
   },
   "scripts": {
     "test": "testling | faucet",
-    "build": "browserify index.js -o dist.js -s sprintly && cat dist.js | uglifyjs -cm > dist.min.js "
+    "build": "browserify sprintly.js -o dist.js -s sprintly && cat dist.js | uglifyjs -cm > dist.min.js "
   },
   "testling": {
     "files": "test/index.js"
+  },
+  "browser": {
+    "./sprintly/support/backbone.js": "./sprintly/support/browser.js",
+    "./sprintly/support/basic-auth.js": "./sprintly/support/browser-basic-auth.js"
+  },
+  "browserify": {
+    "transform": [
+      "aliasify"
+    ]
+  },
+  "aliasify": {
+    "aliases": {
+      "underscore": "lodash"
+    }
   }
 }
