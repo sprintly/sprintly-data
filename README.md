@@ -6,10 +6,10 @@
 
 ## Installation
 
-Browserify:
+Browserify / Node:
 
 ```
-npm install --save-dev git+ssh://git@github.com:sprintly/sprintly-sdk.git
+npm install --save sprintly/sprintly-sdk
 ```
 
 UMD bundle (AMD, global variable) is checked in `./dist.js`.
@@ -53,7 +53,7 @@ A backing collection that uses
 available on a product model, as well as the Item supermodel.
 
 ```javascript
-myProduct.test
+myProduct.items
 // => [Backbone.Collection]
 
 myProduct.ItemModel
