@@ -1,5 +1,5 @@
 var test = require('tape')
-var sprintly = require('../sprintly')
+var sprintly = require('../index')
 
 test('version number', function(t) {
   t.plan(1)
