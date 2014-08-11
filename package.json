@@ -1,5 +1,5 @@
 {
-  "name": "sprintly-sdk",
+  "name": "sprintly",
   "version": "0.0.2",
   "main": "index.js",
   "dependencies": {
@@ -20,7 +20,8 @@
   },
   "scripts": {
     "test": "testling | faucet",
-    "build": "browserify sprintly.js -o dist.js -s sprintly && cat dist.js | uglifyjs -cm > dist.min.js "
+    "build": "browserify index.js -o dist/dist.js -s sprintly && cat dist/dist.js | uglifyjs -cm > dist/dist.min.js ",
+    "prepublish": "npm run build"
   },
   "testling": {
     "files": "test/index.js"
@@ -28,15 +29,5 @@
   "browser": {
     "./sprintly/support/backbone.js": "./sprintly/support/browser.js",
     "./sprintly/support/basic-auth.js": "./sprintly/support/browser-basic-auth.js"
-  },
-  "browserify": {
-    "transform": [
-      "aliasify"
-    ]
-  },
-  "aliasify": {
-    "aliases": {
-      "underscore": "lodash"
-    }
   }
 }

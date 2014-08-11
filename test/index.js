@@ -9,7 +9,7 @@ test('version number', function(t) {
 test('api request', function(t) {
   t.plan(1);
 
-  var client = sprintly.createClient('sam@quickleft.com', 'LSzELDqKvbN2LhjAD3UDcKMm5x26eHEK')
+  var client = sprintly.createClient(process.env.SPRINTLY_EMAIL, process.env.SPRINTLY_TOKEN)
   client.products.fetch()
     .then(function(c) {
       console.log(client.products.toJSON())
