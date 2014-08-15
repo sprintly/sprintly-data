@@ -20,14 +20,15 @@
   },
   "scripts": {
     "test": "testling | faucet",
-    "build": "browserify index.js -o dist/dist.js -s sprintly && cat dist/dist.js | uglifyjs -cm > dist/dist.min.js ",
+    "build": "browserify index.js -o dist/sprintly.js -s sprintly -d",
+    "minify": "cat dist/sprintly.js | uglifyjs -cm > dist/sprintly.min.js ",
     "prepublish": "npm run build"
   },
   "testling": {
     "files": "test/index.js"
   },
   "browser": {
-    "./sprintly/support/backbone.js": "./sprintly/support/browser.js",
-    "./sprintly/support/basic-auth.js": "./sprintly/support/browser-basic-auth.js"
+    "./lib/support/backbone.js": "./lib/support/browser/backbone.js",
+    "./lib/support/basic-auth.js": "./lib/support/browser/basic-auth.js"
   }
 }
