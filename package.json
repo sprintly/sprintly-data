@@ -28,8 +28,9 @@
   "testling": {
     "files": "test/index.js"
   },
-  "browser": {
-    "./lib/support/backbone.js": "./lib/support/browser/backbone.js",
-    "./lib/support/basic-auth.js": "./lib/support/browser/basic-auth.js"
+  "browserify": {
+    "transform": [
+      "envify"
+    ]
   }
 }
