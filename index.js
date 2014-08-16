@@ -1,6 +1,3 @@
-var _ = require('lodash')
-var $ = require('jquery')
-var btoa = require('btoa')
 var Backbone = require('./lib/support/backbone')
 var basicAuth = require('./lib/support/basic-auth');
 var Products = require('./lib/products')
