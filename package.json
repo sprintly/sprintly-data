@@ -7,30 +7,38 @@
     "backbone": "1.1.2",
     "backbone-super-sync": "0.0.13",
     "btoa": "^1.1.2",
-    "jquery": ">=1.8.0",
     "lodash": "^2.4.1",
-    "supermodel": "git://github.com/pathable/supermodel.git"
+    "supermodel": "git://github.com/pathable/supermodel.git",
+    "validator": "^3.17.0"
   },
   "devDependencies": {
     "aliasify": "^1.4.0",
     "browserify": "^4.2.0",
-    "faucet": "0.0.1",
-    "tape": "^2.13.3",
-    "testling": "^1.7.0",
-    "uglify-js": "^2.4.14"
+    "chai": "^1.9.1",
+    "chai-as-promised": "^4.1.1",
+    "envify": "^3.0.0",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3",
+    "uglify-js": "^2.4.14",
+    "watchify": "^1.0.2"
   },
   "scripts": {
-    "test": "testling | faucet",
-    "build": "browserify index.js -o dist/sprintly.js -s sprintly -d",
+    "test": "mocha test",
+    "build": "browserify index.js -o dist/sprintly.js -s sprintly",
+    "build-test": "browserify test/browser/index.js -o test/browser/bundle.js -d",
+    "watch-test": "watchify test/browser/index.js -o test/browser/bundle.js -d -v",
     "minify": "cat dist/sprintly.js | uglifyjs -cm > dist/sprintly.min.js ",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build && npm run minify"
   },
-  "testling": {
-    "files": "test/index.js"
+  "aliasify": {
+    "aliases": {
+      "underscore": "lodash"
+    }
   },
   "browserify": {
     "transform": [
-      "envify"
+      "envify",
+      "aliasify"
     ]
   }
 }
