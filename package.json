@@ -9,14 +9,14 @@
     "btoa": "^1.1.2",
     "lodash": "^2.4.1",
     "supermodel": "git://github.com/pathable/supermodel.git",
-    "validator": "^3.17.0"
+    "validator": "^3.17.0",
+    "envify": "^3.0.0"
   },
   "devDependencies": {
     "aliasify": "^1.4.0",
     "browserify": "^4.2.0",
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
-    "envify": "^3.0.0",
     "mocha": "^1.21.4",
     "sinon": "^1.10.3",
     "uglify-js": "^2.4.14",
@@ -37,8 +37,8 @@
   },
   "browserify": {
     "transform": [
-      "envify",
-      "aliasify"
+      "aliasify",
+      "envify"
     ]
   }
 }
