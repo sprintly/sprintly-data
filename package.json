@@ -2,6 +2,10 @@
   "name": "sprintly",
   "version": "0.0.4",
   "main": "index.js",
+  "repository" : { 
+    "type" : "git",
+    "url" : "http://github.com/sprintly/sprintly-js.git"
+  },
   "dependencies": {
     "ampersand-dependency-mixin": "^0.2.3",
     "backbone-super-sync": "0.0.13",
@@ -13,7 +17,6 @@
     "validator": "^3.17.0"
   },
   "devDependencies": {
-    "aliasify": "^1.4.0",
     "browserify": "^4.2.0",
     "browserify-swap": "^0.2.1",
     "chai": "^1.9.1",
