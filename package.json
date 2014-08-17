@@ -2,9 +2,9 @@
   "name": "sprintly",
   "version": "0.0.4",
   "main": "index.js",
-  "repository" : { 
-    "type" : "git",
-    "url" : "http://github.com/sprintly/sprintly-js.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/sprintly/sprintly-js.git"
   },
   "dependencies": {
     "ampersand-dependency-mixin": "^0.2.3",
@@ -38,5 +38,18 @@
     "transform": [
       "envify"
     ]
-  }
+  },
+  "description": "> A JavaScript client for the sprint.ly CORS API",
+  "bugs": {
+    "url": "https://github.com/sprintly/sprintly-js/issues"
+  },
+  "homepage": "https://github.com/sprintly/sprintly-js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "sdk"
+  ],
+  "author": "Quick Left Team",
+  "license": "BSD"
 }
