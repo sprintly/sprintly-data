@@ -1,20 +1,21 @@
 {
   "name": "sprintly",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "dependencies": {
     "ampersand-dependency-mixin": "^0.2.3",
-    "backbone": "1.1.2",
     "backbone-super-sync": "0.0.13",
+    "backdash": "^1.1.2-2.4.1",
     "btoa": "^1.1.2",
+    "envify": "^3.0.0",
     "lodash": "^2.4.1",
-    "supermodel": "git://github.com/pathable/supermodel.git",
-    "validator": "^3.17.0",
-    "envify": "^3.0.0"
+    "supermodel": "git://github.com/wookiehangover/supermodel.git",
+    "validator": "^3.17.0"
   },
   "devDependencies": {
     "aliasify": "^1.4.0",
     "browserify": "^4.2.0",
+    "browserify-swap": "^0.2.1",
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "mocha": "^1.21.4",
@@ -30,14 +31,8 @@
     "minify": "cat dist/sprintly.js | uglifyjs -cm > dist/sprintly.min.js ",
     "prepublish": "npm run build && npm run minify"
   },
-  "aliasify": {
-    "aliases": {
-      "underscore": "lodash"
-    }
-  },
   "browserify": {
     "transform": [
-      "aliasify",
       "envify"
     ]
   }
