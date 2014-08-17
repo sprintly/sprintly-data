@@ -60,6 +60,34 @@ myProduct.ItemModel
 // => [Supermodel.Model]
 ```
 
+## API
+
+#### sprintly.createClient(email, apiKey)
+
+### Products
+
+#### client.products
+
+Instance of `Backbone.Collection` containing a user's products. Use
+`fetch()` to populate with data.
+
+### Items
+
+#### product.items
+
+An instance of `Backbone.Collection` that contains all items that have
+been fetched from the server
+
+#### product.getItemsByStatus(status)
+
+Creat an empty collection that can retrive items for a status. Returns
+and instance of `Backbone.Collection`.
+
+#### product.createItem(attrs, options)
+
+Create a new item. Return an instance of `product.ItemModel`.
+
+
 ## Development
 
 **Prerequisites**
