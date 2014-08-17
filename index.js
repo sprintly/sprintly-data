@@ -5,17 +5,16 @@ var User = require('./lib/user')
 
 var version = require('./package.json').version
 
-exports.createClient = function(email, apiKey) {
-
+function Client(email, apiKey) {
   Backbone.ajax = basicAuth(email, apiKey);
+  this.products = new Products()
+  this.user = new User()
+}
 
-  return {
-    products: new Products(),
-    user: new User(),
-    VERSION: version
-  }
-
+exports.createClient = function(email, apiKey) {
+  return new Client(email, apiKey)
 }
 
 exports.VERSION = version
 
+exports.Client =  Client
