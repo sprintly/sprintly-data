@@ -2,6 +2,11 @@
   "name": "sprintly",
   "version": "0.0.3",
   "main": "index.js",
+  "repository" : { 
+    "type" : "git",
+    "url" : "http://github.com/sprintly/sprintly-js.git"
+  },
+  "repository": "git://github.com/sprintly/sprintly-js.git",
   "dependencies": {
     "ampersand-dependency-mixin": "^0.2.3",
     "backbone": "1.1.2",
