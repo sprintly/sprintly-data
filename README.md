@@ -41,7 +41,7 @@ product.
 
 ```
 var myProduct = clients.products.get(1);
-var backlog = myProduct.fetchItemsByStatus('backlog');
+var backlog = myProduct.getItemsByStatus('backlog');
 
 backlog.fetch(function(items) {
   // backlog items loaded
