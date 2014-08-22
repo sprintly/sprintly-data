@@ -9,7 +9,7 @@
 Browserify / Node:
 
 ```
-npm install --save sprintly/sprintly-sdk
+npm install --save sprintly/sprintly-js
 ```
 
 UMD bundle (AMD, global variable) is checked in `./dist.js`.
