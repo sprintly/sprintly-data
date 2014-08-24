@@ -1,2 +1,7 @@
-require('./sanity');
-require('./products/product-test');
+describe('slow', function() {
+  require('./sanity');
+});
+
+describe('fast', function() {
+  require('./products/product-test');
+});

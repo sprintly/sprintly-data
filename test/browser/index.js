@@ -1,5 +1,4 @@
-require('../sanity');
-require('../products/product-test');
+require('../index');
 
 if (window.mochaPhantomjs) {
   window.mochaPhantomjs.run();

@@ -1,5 +1,14 @@
 {
   "undef": true,
   "node": true,
-  "unused": true
+  "unused": true,
+  "globals": {
+    "describe": true,
+    "context": true,
+    "it": true,
+    "before": true,
+    "beforeEach": true,
+    "after": true,
+    "afterEach": true
+  }
 }
