@@ -98,8 +98,74 @@ Create a new item. Return an instance of `product.ItemModel`.
 $ npm install
 ```
 
-Run tests:
+#### Tests
+
+The full test suite requires a Sprintly account with an api key and
+the id of product you want to use during testing.
+
+```bash
+$ export SPRINTLY_EMAIL=sam@quickleft.com \
+    SPRINTLY_API_KEY=xxx \
+    SPRINTLY_PRODUCT_ID=22421
+```
+
+Then run the test suite with:
 
 ```bash
 $ npm test
+```
+
+Or if you'd like to run tests in the browser, build the test bundle and
+open the html runner in your favorite browser.
+
+```bash
+$ npm run build-test
+$ open test/index.html
+```
+
+To run a partial test suite (unit tests only), use the gulp task:
+
+```bash
+$ gulp test
+```
+
+#### Build Tasks
+
+To build just the standalone browser bundle, run:
+
+```bash
+$ npm run build
+```
+
+To build a minified standalone browser bundle, run:
+
+```bash
+$ npm run prepublish
+```
+
+To build the files for the browser based test suite, run:
+
+```bash
+$ npm run build-test
+```
+
+Or, re-build the test files any time a file changes with:
+
+```bash
+$ npm run watch-test
+```
+
+#### [JShint](jshint.com) and [jsfmt](https://github.com/rdio/jsfmt/)
+
+We use jshint and jsfmt to keep things nice and tidy.
+
+* `jshint` will use `.jshintrc` to evaluate all files in lib/ and test/
+* `jsfmt` will actively adjust formatting to match the style of the
+  project, only after jshint passes
+
+Please run these with the provided gulp task before opening pull
+requests or checking in code:
+
+```bash
+$ gulp fmt
 ```
