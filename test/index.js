@@ -4,4 +4,5 @@ describe('slow', function() {
 
 describe('fast', function() {
   require('./products/product-test');
+  require('./items/item-model-test');
 });

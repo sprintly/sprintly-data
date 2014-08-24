@@ -3,7 +3,7 @@ var sinon = require('sinon').sandbox.create();
 var sprintly = require('../../index');
 var Comments = require('../../lib/items/comments');
 
-describe('Product Model', function() {
+describe('Item Model', function() {
 
   before(function(){
     this.client = sprintly.createClient(
@@ -11,7 +11,7 @@ describe('Product Model', function() {
   });
 
   beforeEach(function() {
-    this.product = this.client.products.add();
+    this.product = this.client.products.add({ id: process.env.SPRINTLY_TEST_PRODUCT || 22241 });
   });
 
   afterEach(function() {
