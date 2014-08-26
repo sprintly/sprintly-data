@@ -29,6 +29,28 @@ describe('Item Model', function() {
 
   });
 
+  describe('validation', function() {
+    it('enforces clientside validation errors', function() {
+      var item = this.product.createItem({
+        type: 'story',
+      });
+      var err = item.validate(item.toJSON());
+
+      assert.match(err, /who, what, why/, 'has the correct error message');
+    });
+
+    it('calls sync when the model passes validation', function() {
+      var sync = sinon.stub(this.product.ItemModel.prototype, 'sync');
+      var item = this.product.createItem({
+        type: 'defect',
+        title: 'I have created THE BUG'
+      });
+
+      item.save();
+      assert.ok(sync.called);
+    });
+  });
+
 });
 
 

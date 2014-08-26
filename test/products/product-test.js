@@ -1,6 +1,10 @@
+var _ = require('lodash');
 var assert = require('chai').assert;
 var sinon = require('sinon').sandbox.create();
 var sprintly = require('../../index');
+var Items = require('../../lib/items');
+var Product = require('../../lib/products/product');
+var People = require('../../lib/products/people');
 
 describe('Product Model', function() {
 
@@ -17,27 +21,46 @@ describe('Product Model', function() {
     sinon.restore();
   });
 
-  describe('createItem', function() {
-    it('enforces clientside validation errors', function() {
-      var item = this.product.createItem({
-        type: 'story',
-      });
-      var err = item.validate(item.toJSON());
-
-      assert.match(err, /who, what, why/, 'has the correct error message');
+  describe('constructor', function() {
+    beforeEach(function() {
+      this.product = new Product({ id: 1234 });
     });
 
-    it('calls sync when the model passes validation', function() {
-      var sync = sinon.stub(this.product.ItemModel.prototype, 'sync');
-      var item = this.product.createItem({
-        type: 'defect',
-        title: 'I have created THE BUG'
-      });
-
-      item.save();
-      assert.ok(sync.called);
+    it('creates a members collection', function() {
+      assert.instanceOf(this.product.members, People);
     });
 
+    it('creates a unique Item supermodel', function() {
+      assert.include(this.product.ItemModel.prototype.urlRoot, '1234');
+    });
+
+    it('makes items an accessor for the supermodel\'s backing collection', function() {
+      var all = sinon.spy(this.product.ItemModel, 'all');
+      var col = this.product.items;
+      assert.ok(all.calledOnce);
+      assert.strictEqual(col, this.product.ItemModel.all());
+    });
+  });
+
+  describe('createItemsCollection', function() {
+    beforeEach(function() {
+      this.items = this.product.createItemsCollection(null, {
+        status: 'backlog'
+      });
+    });
+
+    it('creates an items collection', function() {
+      assert.instanceOf(this.items, Items);
+    });
+
+    it('caches the instances of the same collection', function() {
+      var items = this.product.createItemsCollection(null, {
+        status: 'backlog'
+      });
+
+      assert.equal(_.size(this.product._filters), 1);
+      assert.strictEqual(items, this.items);
+    });
   });
 
 });
