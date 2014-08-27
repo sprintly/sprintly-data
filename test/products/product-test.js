@@ -8,13 +8,14 @@ var People = require('../../lib/products/people');
 
 describe('Product Model', function() {
 
-  before(function(){
-    this.client = sprintly.createClient(
-      process.env.SPRINTLY_EMAIL, process.env.SPRINTLY_API_KEY);
+  before(function() {
+    this.client = sprintly.createClient(process.env.SPRINTLY_EMAIL, process.env.SPRINTLY_API_KEY);
   });
 
   beforeEach(function() {
-    this.product = this.client.products.add({ id: process.env.SPRINTLY_TEST_PRODUCT || 22241 });
+    this.product = this.client.products.add({
+      id: process.env.SPRINTLY_TEST_PRODUCT || 22241
+    });
   });
 
   afterEach(function() {
@@ -23,7 +24,9 @@ describe('Product Model', function() {
 
   describe('constructor', function() {
     beforeEach(function() {
-      this.product = new Product({ id: 1234 });
+      this.product = new Product({
+        id: 1234
+      });
     });
 
     it('creates a members collection', function() {

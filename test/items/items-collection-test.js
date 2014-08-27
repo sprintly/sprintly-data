@@ -5,13 +5,14 @@ var QueryConfig = require('../../lib/items/query-config');
 var sprintly = require('../../index');
 
 describe('Items Collection', function() {
-  before(function(){
-    this.client = sprintly.createClient(
-      process.env.SPRINTLY_EMAIL, process.env.SPRINTLY_API_KEY);
+  before(function() {
+    this.client = sprintly.createClient(process.env.SPRINTLY_EMAIL, process.env.SPRINTLY_API_KEY);
   });
 
   beforeEach(function() {
-    this.product = this.client.products.add({ id: process.env.SPRINTLY_TEST_PRODUCT || 22241 });
+    this.product = this.client.products.add({
+      id: process.env.SPRINTLY_TEST_PRODUCT || 22241
+    });
   });
 
   afterEach(function() {
@@ -28,7 +29,9 @@ describe('Items Collection', function() {
     it('creates a QueryConfig model', function() {
       var items = new Items(null, {
         productId: 1234,
-        config: { status: 'backlog' }
+        config: {
+          status: 'backlog'
+        }
       });
 
       assert.instanceOf(items.config, QueryConfig);
