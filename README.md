@@ -2,6 +2,8 @@
 
 > A JavaScript client for the sprint.ly CORS API
 
+[![wercker status](https://app.wercker.com/status/bc221f27cbc9fc9a53a2157d8c20dd09/m "wercker status")](https://app.wercker.com/project/bykey/bc221f27cbc9fc9a53a2157d8c20dd09)
+
 **WIP**
 
 ## Installation
