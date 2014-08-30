@@ -33,6 +33,7 @@
   },
   "scripts": {
     "test": "mocha test",
+    "gulp": "gulp test",
     "build": "browserify index.js -o dist/sprintly.js -s sprintly",
     "build-test": "browserify test/browser/index.js -o test/browser/bundle.js -d",
     "watch-test": "watchify test/browser/index.js -o test/browser/bundle.js -d -v",
