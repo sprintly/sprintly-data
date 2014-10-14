@@ -4,7 +4,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/sprintly/sprintly-js.git"
+    "url": "http://github.com/sprintly/sprintly-data.git"
   },
   "dependencies": {
     "ampersand-dependency-mixin": "^0.2.3",
@@ -47,9 +47,9 @@
   },
   "description": "> A JavaScript client for the sprint.ly CORS API",
   "bugs": {
-    "url": "https://github.com/sprintly/sprintly-js/issues"
+    "url": "https://github.com/sprintly/sprintly-data/issues"
   },
-  "homepage": "https://github.com/sprintly/sprintly-js",
+  "homepage": "https://github.com/sprintly/sprintly-data",
   "directories": {
     "test": "test"
   },

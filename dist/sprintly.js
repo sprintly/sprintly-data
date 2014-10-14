@@ -21,9 +21,11 @@ exports.VERSION = version
 exports.Client =  Client
 
 },{"./lib/products":8,"./lib/support/backbone":11,"./lib/support/basic-auth":12,"./lib/user":13,"./package.json":90}],2:[function(_dereq_,module,exports){
-exports.BASE_URL = "https://local.sprint.ly:9000/api" || 'https://sprint.ly/api'
+(function (process){
+exports.BASE_URL = process.env.BASE_URL || 'https://sprint.ly/api';
 
-},{}],3:[function(_dereq_,module,exports){
+}).call(this,_dereq_("FWaASH"))
+},{"FWaASH":84}],3:[function(_dereq_,module,exports){
 var Backbone = _dereq_('../../support/backbone');
 
 var Comment = Backbone.Model.extend({
@@ -31,7 +33,6 @@ var Comment = Backbone.Model.extend({
   url: function() {
     return Backbone.Model.prototype.url.apply(this, arguments).replace('.json', '') + '.json';
   }
-
 });
 
 module.exports = Comment;
@@ -40,7 +41,7 @@ module.exports = Comment;
 var _ = _dereq_('lodash');
 var Backbone = _dereq_('../../support/backbone');
 var deps = _dereq_('ampersand-dependency-mixin');
-var Comment =_dereq_('./comment');
+var Comment = _dereq_('./comment');
 
 var Comments = Backbone.Collection.extend({
 
@@ -57,7 +58,6 @@ var Comments = Backbone.Collection.extend({
   url: function() {
     return this.item.url().replace('.json', '') + '/comments.json';
   }
-
 });
 
 _.extend(Comments.prototype, deps);
@@ -65,46 +65,43 @@ _.extend(Comments.prototype, deps);
 module.exports = Comments;
 
 },{"../../support/backbone":11,"./comment":3,"ampersand-dependency-mixin":14,"lodash":88}],5:[function(_dereq_,module,exports){
-var _ = _dereq_('lodash')
-var qs = _dereq_('querystring')
-var Backbone = _dereq_('../support/backbone')
-var config = _dereq_('../config')
-var deps = _dereq_('ampersand-dependency-mixin')
-var Item = _dereq_('./item')
+var _ = _dereq_('lodash');
+var Backbone = _dereq_('../support/backbone');
+var config = _dereq_('../config');
+var deps = _dereq_('ampersand-dependency-mixin');
+var Item = _dereq_('./item');
 var QueryConfig = _dereq_('./query-config');
 
 var Items = Backbone.Collection.extend({
 
+  constructor: function(models, options) {
+    options = options || {};
+    this.attachDeps(options);
+    this.config = options.config.attributes ? options.config : new QueryConfig(options.config);
+    options = _.omit(options, 'config');
+    Backbone.Collection.apply(this, arguments);
+  },
+
   url: function() {
-    return config.BASE_URL + '/products/' + this.productId + '/items'
+    return config.BASE_URL + '/products/' + this.productId + '/items';
   },
 
   sync: function(method, model, options) {
-    options = options || {}
+    options = options || {};
     var url = options.url || (typeof model.url == 'function' ? model.url() : model.url);
     if (method === 'read') {
-      var query = qs.stringify(this.config.toJSON())
-      options.url = url + '.json?' + query
+      var query = this.config.serialize();
+      options.url = url + '.json?' + query;
     } else {
-      options.url = url + '.json'
+      options.url = url + '.json';
     }
-    return Backbone.Collection.prototype.sync.call(this, method, model, options)
+    return Backbone.Collection.prototype.sync.call(this, method, model, options);
   },
 
   dependencies: {
-    productId: 'Product ID',
-    people: 'People Collection'
-  },
-
-  constructor: function(models, options) {
-    options = options || {};
-    this.attachDeps(options)
-    this.config = new QueryConfig(options.config)
-    options = _.omit(options, 'config');
-    Backbone.Collection.apply(this, arguments)
+    productId: 'Product ID'
   }
-
-})
+});
 
 Items.ITEM_TYPES = Item.ITEM_STATUSES;
 Items.STAGES = Item.STAGES;
@@ -113,7 +110,7 @@ _.extend(Items.prototype, deps);
 
 module.exports = Items;
 
-},{"../config":2,"../support/backbone":11,"./item":6,"./query-config":7,"ampersand-dependency-mixin":14,"lodash":88,"querystring":87}],6:[function(_dereq_,module,exports){
+},{"../config":2,"../support/backbone":11,"./item":6,"./query-config":7,"ampersand-dependency-mixin":14,"lodash":88}],6:[function(_dereq_,module,exports){
 var _ = _dereq_('lodash');
 var Supermodel = _dereq_('supermodel');
 var Comments = _dereq_('./comments');
@@ -121,7 +118,9 @@ var Comments = _dereq_('./comments');
 var Item = Supermodel.Model.extend({
 
   initialize: function() {
-    this.comments = new Comments(null, { item: this });
+    this.comments = new Comments(null, {
+      item: this
+    });
   },
 
   idAttribute: 'number',
@@ -134,8 +133,8 @@ var Item = Supermodel.Model.extend({
   toJSON: function() {
     var attrs = Supermodel.Model.prototype.toJSON.call(this);
 
-    if (_.isArray(attrs.tags)){
-      attrs.tags = attrs.tags.join(',')
+    if (_.isArray(attrs.tags)) {
+      attrs.tags = attrs.tags.join(',');
     }
 
     return attrs;
@@ -151,33 +150,31 @@ var Item = Supermodel.Model.extend({
         'who': _.isString,
         'what': _.isString,
         'why': _.isString
-      })
+      });
     } else {
       _.extend(requiredProps, {
         'title': _.isString
-      })
+      });
     }
 
     var invalidRequiredProps = _.reject(_.keys(requiredProps), function(name) {
       var isValid = requiredProps[name];
       var attr = attrs[name];
       if (!attr) {
-        return false
+        return false;
       }
       return isValid(attrs[name]);
-    })
+    });
 
     if (invalidRequiredProps.length > 0) {
-      return 'Missing or invalid properties: '+ invalidRequiredProps.join(', ');
+      return 'Missing or invalid properties: ' + invalidRequiredProps.join(', ');
     }
 
     var optionalProps = {
       'description': _.isString,
       'status': _.partial(_.contains, Object.keys(Item.ITEM_STATUSES)),
-      'assigned_to': _.isNumber,
-      // 'score': _.isNumber,
-      // 'tags': _.isString
-    }
+      'assigned_to': _.isNumber
+    };
 
     var invalidOptionalProps = _.reject(_.keys(optionalProps), function(name) {
       var isValid = optionalProps[name];
@@ -187,7 +184,7 @@ var Item = Supermodel.Model.extend({
       } else {
         return true;
       }
-    })
+    });
 
     if (invalidOptionalProps.length > 0) {
       return [
@@ -195,12 +192,12 @@ var Item = Supermodel.Model.extend({
         (invalidOptionalProps.length === 1 ? 'property' : 'properties'),
         ': ',
         invalidOptionalProps.join(', ')
-      ].join('')
+      ].join('');
     }
   }
-})
+});
 
-Item.ITEM_TYPES = ['story', 'task', 'defect', 'test']
+Item.ITEM_TYPES = ['story', 'task', 'defect', 'test'];
 
 Item.ITEM_STATUSES = {
   'someday': 'Someday',
@@ -208,20 +205,20 @@ Item.ITEM_STATUSES = {
   'in-progress': 'Current',
   'completed': 'Done',
   'accepted': 'Accepted'
-}
+};
 
 Item.STAGES = {
   'Triage': ['someday', 'backlog'],
   'Underway': ['backlog', 'in-progress'],
   'Pending': ['in-progress', 'completed'],
   'Done': ['completed', 'accepted'],
-}
+};
 
 module.exports = Item;
 
 },{"./comments":4,"lodash":88,"supermodel":89}],7:[function(_dereq_,module,exports){
-var _ = _dereq_('lodash')
-var Backbone = _dereq_('../support/backbone')
+var Backbone = _dereq_('../support/backbone');
+var qs = _dereq_('querystring');
 
 module.exports = Backbone.Model.extend({
 
@@ -231,34 +228,38 @@ module.exports = Backbone.Model.extend({
       limit: 100,
       status: 'backlog',
       order_by: 'newest'
-    }
+    };
+  },
+
+  serialize: function() {
+    return qs.stringify(this.toJSON());
   }
+});
 
-})
+},{"../support/backbone":11,"querystring":87}],8:[function(_dereq_,module,exports){
+var Backbone = _dereq_('../support/backbone');
+var Product = _dereq_('./product');
+var config = _dereq_('../config');
 
-},{"../support/backbone":11,"lodash":88}],8:[function(_dereq_,module,exports){
-var Backbone = _dereq_('../support/backbone')
-var Product = _dereq_('./product')
-var config = _dereq_('../config')
-
-module.exports = Backbone.Collection.extend({
+var Products = Backbone.Collection.extend({
 
   model: Product,
 
   url: config.BASE_URL + '/products.json'
+});
 
-})
+module.exports = Products;
 
 },{"../config":2,"../support/backbone":11,"./product":10}],9:[function(_dereq_,module,exports){
-var _ = _dereq_('lodash')
-var Backbone = _dereq_('../support/backbone')
-var config = _dereq_('../config')
-var deps = _dereq_('ampersand-dependency-mixin')
+var _ = _dereq_('lodash');
+var Backbone = _dereq_('../support/backbone');
+var config = _dereq_('../config');
+var deps = _dereq_('ampersand-dependency-mixin');
 
 var PeopleCollection = Backbone.Collection.extend({
 
   url: function() {
-    return config.BASE_URL + '/products/' + this.productId + '/people.json'
+    return config.BASE_URL + '/products/' + this.productId + '/people.json';
   },
 
   dependencies: {
@@ -266,45 +267,45 @@ var PeopleCollection = Backbone.Collection.extend({
   },
 
   initialize: function(models, options) {
-    this.attachDeps(options)
-    this.fetch()
+    this.attachDeps(options);
   }
-
-})
+});
 
 _.extend(PeopleCollection.prototype, deps);
 
-module.exports = PeopleCollection
+module.exports = PeopleCollection;
 
 },{"../config":2,"../support/backbone":11,"ampersand-dependency-mixin":14,"lodash":88}],10:[function(_dereq_,module,exports){
-var Backbone = _dereq_('../support/backbone')
-var Supermodel = _dereq_('supermodel')
-var config = _dereq_('../config')
-var Items = _dereq_('../items')
-var Model = _dereq_('../items/item')
-var People = _dereq_('./people')
+var Backbone = _dereq_('../support/backbone');
+var config = _dereq_('../config');
+var Items = _dereq_('../items');
+var Model = _dereq_('../items/item');
+var People = _dereq_('./people');
+var QueryConfig = _dereq_('../items/query-config');
 
 module.exports = Backbone.Model.extend({
 
-  constructor: function(attrs, options) {
-    this.people = new People(null, { productId: attrs.id })
+  constructor: function(attrs) {
+    this.members = new People(null, {
+      productId: attrs.id
+    });
 
     // Use Supermodel to create a trackable Item model for this collection
     var ItemModel = this.ItemModel = Model.extend({
       urlRoot: this.url(attrs.id).replace('.json', '/items')
-    })
+    });
 
     // Expose getter for the Supermodel backing collection
     Object.defineProperty(this, 'items', {
-      get: function(){
-        return ItemModel.all()
+      get: function() {
+        return ItemModel.all();
       }
-    })
+    });
 
     // cache for Item Collection filters
-    this._filters = {}
+    this._filters = {};
 
-    Backbone.Model.apply(this, arguments)
+    Backbone.Model.apply(this, arguments);
   },
 
   url: function(id) {
@@ -313,43 +314,51 @@ module.exports = Backbone.Model.extend({
   },
 
   createItem: function(attrs, options) {
-    var item = new this.ItemModel(attrs, options)
+    var item = new this.ItemModel(attrs, options);
     return item;
   },
 
   createItemsCollection: function(models, query) {
-    var ItemModel = this.ItemModel
+    var ItemModel = this.ItemModel;
+    var queryConfig = new QueryConfig(query);
+    var key = queryConfig.serialize();
+    var collection = this._filters[key];
 
-    return new Items(models || [], {
-      productId: this.get('id'),
-      people: this.people,
-      model: function(attrs, options) {
-        return ItemModel.create(attrs, options)
-      },
-      config: query
-    });
+    if (collection) {
+      collection.add(models);
+    } else {
+      collection = this._filters[key] = new Items(models || [], {
+        productId: this.get('id'),
+        people: this.people,
+        model: function(attrs, options) {
+          return ItemModel.create(attrs, options);
+        },
+        config: queryConfig
+      });
+    }
+
+    return collection;
   },
 
   getItemsByStatus: function(status) {
     return this.createItemsCollection(null, {
       status: status
-    })
+    });
   },
 
   getItemsByUser: function(user) {
     return this.createItemsCollection(null, {
       created_by: user
-    })
+    });
   }
-
 });
 
 
 
-},{"../config":2,"../items":5,"../items/item":6,"../support/backbone":11,"./people":9,"supermodel":89}],11:[function(_dereq_,module,exports){
-var Backbone = _dereq_('backdash')
-Backbone.sync = _dereq_('backbone-super-sync')
-module.exports = Backbone
+},{"../config":2,"../items":5,"../items/item":6,"../items/query-config":7,"../support/backbone":11,"./people":9}],11:[function(_dereq_,module,exports){
+var Backbone = _dereq_('backdash');
+Backbone.sync = _dereq_('backbone-super-sync');
+module.exports = Backbone;
 
 },{"backbone-super-sync":78,"backdash":83}],12:[function(_dereq_,module,exports){
 var Backbone = _dereq_('./backbone');
@@ -367,12 +376,12 @@ module.exports = function(email, apiKey) {
 };
 
 },{"./backbone":11}],13:[function(_dereq_,module,exports){
-var Backbone = _dereq_('./support/backbone')
-var config = _dereq_('./config')
+var Backbone = _dereq_('./support/backbone');
+var config = _dereq_('./config');
 
 module.exports = Backbone.Model.extend({
   url: config.BASE_URL + '/user/whoami.json'
-})
+});
 
 
 },{"./config":2,"./support/backbone":11}],14:[function(_dereq_,module,exports){
@@ -14235,7 +14244,7 @@ module.exports={
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/sprintly/sprintly-js.git"
+    "url": "http://github.com/sprintly/sprintly-data.git"
   },
   "dependencies": {
     "ampersand-dependency-mixin": "^0.2.3",
@@ -14252,6 +14261,11 @@ module.exports={
     "browserify-swap": "^0.2.1",
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
+    "gulp": "^3.8.7",
+    "gulp-jsfmt": "^0.2.0",
+    "gulp-jshint": "^1.8.4",
+    "gulp-mocha": "^1.0.0",
+    "jshint-stylish": "^0.4.0",
     "mocha": "^1.21.4",
     "sinon": "^1.10.3",
     "uglify-js": "^2.4.14",
@@ -14259,6 +14273,7 @@ module.exports={
   },
   "scripts": {
     "test": "mocha test",
+    "gulp": "gulp test",
     "build": "browserify index.js -o dist/sprintly.js -s sprintly",
     "build-test": "browserify test/browser/index.js -o test/browser/bundle.js -d",
     "watch-test": "watchify test/browser/index.js -o test/browser/bundle.js -d -v",
@@ -14272,9 +14287,9 @@ module.exports={
   },
   "description": "> A JavaScript client for the sprint.ly CORS API",
   "bugs": {
-    "url": "https://github.com/sprintly/sprintly-js/issues"
+    "url": "https://github.com/sprintly/sprintly-data/issues"
   },
-  "homepage": "https://github.com/sprintly/sprintly-js",
+  "homepage": "https://github.com/sprintly/sprintly-data",
   "directories": {
     "test": "test"
   },
