@@ -2,6 +2,7 @@ var Backbone = require('./lib/support/backbone');
 var basicAuth = require('./lib/support/basic-auth');
 var Products = require('./lib/products');
 var User = require('./lib/user');
+var consumer = require('./lib/page_consumer');
 
 var version = require('./package.json').version;
 
@@ -18,3 +19,4 @@ exports.createClient = function(email, apiKey) {
 exports.VERSION = version;
 
 exports.Client =  Client;
+exports.collectionConsumer = consumer;
