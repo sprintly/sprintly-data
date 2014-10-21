@@ -21,7 +21,7 @@ UMD bundle (AMD, global variable) is checked in `./dist.js`.
 The Client takes and email and API key, and returns 2 Backbone collections.
 
 ```javascript
-var sprintly = require('sprintly-sdk');
+var sprintly = require('sprintly-data');
 sprintly.createClient(email, apiKey);
 // => {
 //     VERSION: 0.0.1,
