@@ -2,6 +2,7 @@ var assert = require('chai').assert;
 var sinon = require('sinon').sandbox.create();
 var sprintly = require('../../index');
 var Comments = require('../../lib/items/comments');
+var Item = require('../../lib/items/item');
 
 describe('Item Model', function() {
 
@@ -28,6 +29,25 @@ describe('Item Model', function() {
       assert.instanceOf(item.comments, Comments);
     });
 
+    it('creates a parent if available', function () {
+      var item = this.product.createItem({
+        id: 50,
+        parent: {
+          id: 23,
+        }
+      });
+
+      assert.instanceOf(item.get('parent'), Item);
+    });
+
+    it("doesn't make a parent item instance if no parent", function () {
+      var item = this.product.createItem({
+        id: 50,
+        parent: 0
+      });
+
+      assert.notInstanceOf(item.get('parent'), Item);
+    });
   });
 
   describe('validation', function() {
