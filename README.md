@@ -84,6 +84,9 @@ var promise = sprintly.collectionConsumer(product.getItemsByStatus('backlog'))
 promise.then(function () {
   console.log('all done');
 });
+promise.progess(function () {
+  console.log('first page of results have loaded');
+});
 ```
 
 #### product.items
