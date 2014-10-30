@@ -4,4 +4,4 @@ build:
     - npm-install
     - script:
         name: Unit Tests
-        code: npm run gulp
+        code: npm run build-test && npm run gulp
