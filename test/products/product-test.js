@@ -52,13 +52,8 @@ describe('Product Model', function() {
       });
     });
 
-    it('SANITY: adding an item to a `filtered` collection should also add it to the backing singleton collection', function() {
-      this.items.add([{ number: 123 }, { number: 321 }]);
-      assert.equal(this.items.length, this.product.items.length);
-    });
-
     it('uses the supermodel to make the collection', function() {
-      this.items.add({ number: 1 });
+      this.items.add([{ number: 123 }, { number: 321 }]);
       assert.equal(this.items.length, this.product.items.length);
     });
 
