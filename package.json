@@ -1,6 +1,6 @@
 {
   "name": "sprintly-data",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
     "btoa": "^1.1.2",
     "envify": "^3.0.0",
     "lodash": "^2.4.1",
-    "supermodel": "git://github.com/wookiehangover/supermodel.git",
+    "supermodel": "git://github.com/pathable/supermodel.git",
     "validator": "^3.17.0"
   },
   "devDependencies": {
@@ -34,9 +34,9 @@
   "scripts": {
     "test": "mocha test",
     "gulp": "gulp test",
-    "build": "mkdir dist && browserify index.js -o dist/sprintly.js -s sprintly",
-    "build-test": "browserify test/browser/index.js -o test/browser/bundle.js -d",
-    "watch-test": "watchify test/browser/index.js -o test/browser/bundle.js -d -v",
+    "build": "mkdir -p dist && browserify index.js -r lodash:underscore -r backdash:backbone -o dist/sprintly.js -s sprintly",
+    "build-test": "browserify test/browser/index.js -r lodash:underscore -r backdash:backbone -o test/browser/bundle.js -d",
+    "watch-test": "watchify test/browser/index.js -o -r lodash:underscore -r backdash:backbone test/browser/bundle.js -d -v",
     "minify": "cat dist/sprintly.js | uglifyjs -cm > dist/sprintly.min.js ",
     "prepublish": "npm run build && npm run minify"
   },
@@ -45,7 +45,7 @@
       "envify"
     ]
   },
-  "description": "> A JavaScript client for the sprint.ly CORS API",
+  "description": "A JavaScript client for the sprint.ly CORS API",
   "bugs": {
     "url": "https://github.com/sprintly/sprintly-data/issues"
   },
