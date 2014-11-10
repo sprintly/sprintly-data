@@ -21,7 +21,7 @@ UMD bundle (AMD, global variable) is checked in `./dist.js`.
 The Client takes and email and API key, and returns 2 Backbone collections.
 
 ```javascript
-var sprintly = require('sprintly-sdk');
+var sprintly = require('sprintly-data');
 sprintly.createClient(email, apiKey);
 // => {
 //     VERSION: 0.0.1,
@@ -75,6 +75,17 @@ Instance of `Backbone.Collection` containing a user's products. Use
 
 ### Items
 
+If you want to consume the full collection, you'll find the
+`collectionConsumer` function handy. It returns a promise for when the
+collection has been fully filled.
+
+```
+var promise = sprintly.collectionConsumer(product.getItemsByStatus('backlog'))
+promise.then(function () {
+  console.log('all done');
+});
+```
+
 #### product.items
 
 An instance of `Backbone.Collection` that contains all items that have
@@ -88,6 +99,7 @@ and instance of `Backbone.Collection`.
 #### product.createItem(attrs, options)
 
 Create a new item. Return an instance of `product.ItemModel`.
+
 
 
 ## Development
