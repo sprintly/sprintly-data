@@ -13,7 +13,7 @@ var fixtures = {
       status: 'backlog'
     }
   }
-}
+};
 
 describe('Sanity', function() {
 
@@ -21,40 +21,40 @@ describe('Sanity', function() {
     this.client = sprintly.createClient(
       process.env.SPRINTLY_EMAIL, process.env.SPRINTLY_API_KEY);
 
-    this.product = this.client.products.add({ id: 22241 })
+    this.product = this.client.products.add({ id: 22241 });
   });
 
   it('product info', function() {
-    return expect(this.product.fetch()).to.be.fulfilled
-  })
+    return expect(this.product.fetch()).to.be.fulfilled;
+  });
 
   it('create & destroy item', function() {
-    var item = this.product.createItem(fixtures.item.task)
+    var item = this.product.createItem(fixtures.item.task);
 
     return item.save()
       .then(function(model) {
-        return expect(item.destroy()).to.eventually.be.fulfilled
-      })
+        return expect(item.destroy()).to.eventually.be.fulfilled;
+      });
   });
 
   describe('fetching items', function() {
 
     before(function() {
-      this.item = this.product.createItem(fixtures.item.task)
-      return this.item.save()
-    })
+      this.item = this.product.createItem(fixtures.item.task);
+      return this.item.save();
+    });
 
     after(function() {
-      return this.item.destroy()
-    })
+      return this.item.destroy();
+    });
 
     it('can fetch items by status', function() {
-      var backlog = this.product.getItemsByStatus('backlog')
+      var backlog = this.product.getItemsByStatus('backlog');
 
       return backlog.fetch().then(function() {
-        expect(backlog.length).to.equal(1)
-      })
-    })
-  })
+        expect(backlog.length).to.equal(1);
+      });
+    });
+  });
 
 });
