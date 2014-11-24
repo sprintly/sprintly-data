@@ -17,6 +17,7 @@ describe('Item Model', function() {
   });
 
   afterEach(function() {
+    this.product.items.reset();
     sinon.restore();
   });
 
@@ -29,20 +30,29 @@ describe('Item Model', function() {
       assert.instanceOf(item.comments, Comments);
     });
 
-    it('creates a parent if available', function () {
+    it('creates a parent if available', function() {
       var item = this.product.createItem({
-        id: 50,
+        number: 50,
         parent: {
-          id: 23,
+          number: 23
         }
       });
 
-      assert.instanceOf(item.get('parent'), Item);
+      assert.instanceOf(item.parent(), Item);
     });
 
-    it("doesn't make a parent item instance if no parent", function () {
+    it('creates a parent item when updating a collection', function() {
+      var item = Item.create({ number: 51 });
+      var collection = this.product.createItemsCollection([], {});
+
+      collection.add({ number: 51, parent: { number: 15 } });
+
+      assert.equal(item.parent().id, 15);
+    });
+
+    it("doesn't make a parent item instance if no parent", function() {
       var item = this.product.createItem({
-        id: 50,
+        number: 50,
         parent: 0
       });
 

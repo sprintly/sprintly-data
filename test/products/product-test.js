@@ -53,7 +53,10 @@ describe('Product Model', function() {
     });
 
     it('uses the supermodel to make the collection', function() {
-      this.items.add([{ number: 123 }, { number: 321 }]);
+      this.items.add([
+        { number: 123 },
+        { number: 321 }
+      ]);
       assert.equal(this.items.length, this.product.items.length);
     });
 
