@@ -1,5 +1,5 @@
-var assert = require('chai').assert;
-var Comments = require('../../lib/items/comments');
+import { assert } from "chai";
+import Comments from "../../lib/items/comments";
 
 describe('Comments Collection', function() {
   describe('initialize', function() {

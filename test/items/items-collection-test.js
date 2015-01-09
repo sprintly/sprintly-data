@@ -1,8 +1,9 @@
-var assert = require('chai').assert;
-var sinon = require('sinon').sandbox.create();
-var Items = require('../../lib/items');
-var QueryConfig = require('../../lib/items/query-config');
-var sprintly = require('../../index');
+import { assert } from "chai";
+import sinon from "sinon";
+import sprintly from "../../sprintly-data";
+import Items from "../../lib/items";
+import QueryConfig from "../../lib/items/query-config";
+
 
 describe('Items Collection', function() {
   before(function() {
@@ -13,10 +14,11 @@ describe('Items Collection', function() {
     this.product = this.client.products.add({
       id: process.env.SPRINTLY_TEST_PRODUCT || 22241
     });
+    this.sinon = sinon.sandbox.create();
   });
 
   afterEach(function() {
-    sinon.restore();
+    this.sinon.restore();
   });
 
   describe('dependencies', function() {

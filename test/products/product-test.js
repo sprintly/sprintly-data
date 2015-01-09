@@ -1,10 +1,10 @@
-var _ = require('lodash');
-var assert = require('chai').assert;
-var sinon = require('sinon').sandbox.create();
-var sprintly = require('../../index');
-var Items = require('../../lib/items');
-var Product = require('../../lib/products/product');
-var People = require('../../lib/products/people');
+import _ from "lodash";
+import { assert } from "chai";
+import sinon from "sinon";
+import sprintly from "../../sprintly-data";
+import Items from "../../lib/items";
+import People from "../../lib/products/people";
+import Product from "../../lib/products/product";
 
 describe('Product Model', function() {
 
@@ -16,10 +16,11 @@ describe('Product Model', function() {
     this.product = this.client.products.add({
       id: process.env.SPRINTLY_TEST_PRODUCT || 22241
     });
+    this.sinon = sinon.sandbox.create();
   });
 
   afterEach(function() {
-    sinon.restore();
+    this.sinon.restore();
   });
 
   describe('constructor', function() {
@@ -38,7 +39,7 @@ describe('Product Model', function() {
     });
 
     it('makes items an accessor for the supermodel\'s backing collection', function() {
-      var all = sinon.spy(this.product.ItemModel, 'all');
+      var all = this.sinon.spy(this.product.ItemModel, 'all');
       var col = this.product.items;
       assert.ok(all.calledOnce);
       assert.strictEqual(col, this.product.ItemModel.all());
@@ -71,6 +72,16 @@ describe('Product Model', function() {
 
       assert.equal(_.size(this.product._filters), 1);
       assert.strictEqual(items, this.items);
+    });
+  });
+
+  describe('url', function() {
+    it('should default the current products id', function() {
+      assert.include(this.product.url(), this.product.id);
+    });
+
+    it('should accept an alternate id as input', function() {
+      assert.include(this.product.url(666), 666);
     });
   });
 
