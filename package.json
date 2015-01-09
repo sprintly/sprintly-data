@@ -21,7 +21,7 @@
   "devDependencies": {
     "envify": "^3.0.0",
     "6to5ify": "^3.1.0",
-    "browserify": "^4.2.0",
+    "browserify": "^8.0.0",
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "gulp": "^3.8.7",
@@ -35,8 +35,8 @@
   },
   "scripts": {
     "test": "mocha test",
-    "build": "mkdir -p dist && browserify sprintly-data.js -r lodash:underscore -r backdash:backbone -o dist/sprintly.js -s sprintly",
-    "watch": "watchify sprintly-data.js -r lodash:underscore -r backdash:backbone -o dist/sprintly.js -s sprintly",
+    "build": "mkdir -p dist && browserify sprintly-data.js -o dist/sprintly.js -s sprintly",
+    "watch": "watchify sprintly-data.js -o dist/sprintly.js -s sprintly",
     "build-test": "browserify test/browser/index.js -r lodash:underscore -r backdash:backbone -o test/browser/bundle.js -d",
     "watch-test": "watchify test/browser/index.js -r lodash:underscore -r backdash:backbone -o test/browser/bundle.js -d -v",
     "minify": "uglifyjs dist/sprintly.js -c -m -o dist/sprintly.min.js ",
