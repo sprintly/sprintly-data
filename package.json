@@ -37,8 +37,8 @@
     "test": "mocha test",
     "build": "mkdir -p dist && browserify sprintly-data.js -o dist/sprintly.js -s sprintly",
     "watch": "watchify sprintly-data.js -o dist/sprintly.js -s sprintly",
-    "build-test": "browserify test/browser/index.js -r lodash:underscore -r backdash:backbone -o test/browser/bundle.js -d",
-    "watch-test": "watchify test/browser/index.js -r lodash:underscore -r backdash:backbone -o test/browser/bundle.js -d -v",
+    "build-test": "browserify test/browser/index.js -o test/browser/bundle.js -d",
+    "watch-test": "watchify test/browser/index.js -o test/browser/bundle.js -d -v",
     "minify": "uglifyjs dist/sprintly.js -c -m -o dist/sprintly.min.js ",
     "prepublish": "npm run build && npm run minify"
   },
