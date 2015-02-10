@@ -1,20 +1,20 @@
 # Sprintly JavaScript SDK
 
-> A JavaScript client for the sprint.ly CORS API
+> A JavaScript client for the [Sprintly](https://sprint.ly/) [API](https://sprintly.uservoice.com/knowledgebase/topics/15784-api)
 
 [![wercker status](https://app.wercker.com/status/bc221f27cbc9fc9a53a2157d8c20dd09/m/master "wercker status")](https://app.wercker.com/project/bykey/bc221f27cbc9fc9a53a2157d8c20dd09)
 
-**WIP**
+**v1.0.1**
 
 ## Installation
 
-Browserify / Node:
+npm (Browserify / Webpack / node / iojs):
 
 ```
-npm install --save sprintly/sprintly-data
+npm install --save sprintly-data
 ```
 
-UMD bundle (AMD, global variable) is checked in `./dist.js`.
+UMD bundle (AMD, global variable) is also available via npm install.
 
 ## Usage
 
@@ -24,7 +24,7 @@ The Client takes and email and API key, and returns 2 Backbone collections.
 var sprintly = require('sprintly-data');
 sprintly.createClient(email, apiKey);
 // => {
-//     VERSION: 0.0.1,
+//     VERSION: 1.0.1,
 //     products: [Backbone.Collection],
 //     user: [Backbone.Model]
 //   }
@@ -35,7 +35,7 @@ a request to the API. This works just like `Backbone.Collection#fetch`.
 
 ```javascript
 client.products.fetch();
-// => [jQuery.Promise]
+// => [Promise]
 ```
 
 Items are accessed through filter collections attached to the items'
@@ -103,8 +103,6 @@ and instance of `Backbone.Collection`.
 
 Create a new item. Return an instance of `product.ItemModel`.
 
-
-
 ## Development
 
 **Prerequisites**
@@ -121,9 +119,9 @@ The full test suite requires a Sprintly account with an api key and
 the id of product you want to use during testing.
 
 ```bash
-$ export SPRINTLY_EMAIL=sam@quickleft.com \
-    SPRINTLY_API_KEY=xxx \
-    SPRINTLY_PRODUCT_ID=22421
+$ export SPRINTLY_EMAIL=example@example.com \
+    SPRINTLY_API_KEY=abc123 \
+    SPRINTLY_PRODUCT_ID=54321
 ```
 
 Then run the test suite with:
@@ -172,17 +170,8 @@ Or, re-build the test files any time a file changes with:
 $ npm run watch-test
 ```
 
-#### [JShint](jshint.com) and [jsfmt](https://github.com/rdio/jsfmt/)
-
-We use jshint and jsfmt to keep things nice and tidy.
-
-* `jshint` will use `.jshintrc` to evaluate all files in lib/ and test/
-* `jsfmt` will actively adjust formatting to match the style of the
-  project, only after jshint passes
-
-Please run these with the provided gulp task before opening pull
-requests or checking in code:
+Lint files
 
 ```bash
-$ gulp fmt
+$ gulp lint
 ```
