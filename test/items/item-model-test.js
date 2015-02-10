@@ -1,8 +1,8 @@
-var assert = require('chai').assert;
-var sinon = require('sinon').sandbox.create();
-var sprintly = require('../../index');
-var Comments = require('../../lib/items/comments');
-var Item = require('../../lib/items/item');
+import { assert } from "chai";
+import sinon from "sinon";
+import sprintly from "../../sprintly-data";
+import Comments from "../../lib/items/comments";
+import Item from "../../lib/items/item";
 
 describe('Item Model', function() {
 
@@ -14,11 +14,12 @@ describe('Item Model', function() {
     this.product = this.client.products.add({
       id: process.env.SPRINTLY_TEST_PRODUCT || 22241
     });
+    this.sinon = sinon.sandbox.create();
   });
 
   afterEach(function() {
     this.product.items.reset();
-    sinon.restore();
+    this.sinon.restore();
   });
 
   describe('initialize', function() {
@@ -71,7 +72,7 @@ describe('Item Model', function() {
     });
 
     it('calls sync when the model passes validation', function() {
-      var sync = sinon.stub(this.product.ItemModel.prototype, 'sync');
+      var sync = this.sinon.stub(this.product.ItemModel.prototype, 'sync');
       var item = this.product.createItem({
         type: 'defect',
         title: 'I have created THE BUG'

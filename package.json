@@ -1,31 +1,31 @@
 {
   "name": "sprintly-data",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "main": "index.js",
+  "browser": "sprintly-data.js",
   "repository": {
     "type": "git",
     "url": "http://github.com/sprintly/sprintly-data.git"
   },
   "dependencies": {
+    "6to5": "^2.7.4",
     "ampersand-dependency-mixin": "^0.2.3",
     "async": "^0.9.0",
     "backbone-super-sync": "0.0.13",
     "backdash": "^1.1.2-2.4.1",
     "btoa": "^1.1.2",
-    "envify": "^3.0.0",
     "lodash": "^2.4.1",
     "q": "^1.0.1",
-    "supermodel": "git://github.com/wookiehangover/supermodel.git",
-    "validator": "^3.17.0"
+    "supermodel": "git://github.com/wookiehangover/supermodel.git"
   },
   "devDependencies": {
-    "browserify": "^4.2.0",
-    "browserify-swap": "^0.2.1",
+    "envify": "^3.0.0",
+    "6to5ify": "^3.1.0",
+    "browserify": "^8.0.0",
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "gulp": "^3.8.7",
-    "gulp-jsfmt": "^0.2.0",
-    "gulp-jshint": "^1.8.4",
+    "gulp-jshint": "^1.9.0",
     "gulp-mocha": "^1.0.0",
     "jshint-stylish": "^0.4.0",
     "mocha": "^1.21.4",
@@ -35,19 +35,20 @@
   },
   "scripts": {
     "test": "mocha test",
-    "gulp": "gulp test",
-    "build": "mkdir -p dist && browserify index.js -r lodash:underscore -r backdash:backbone -o dist/sprintly.js -s sprintly",
-    "build-test": "browserify test/browser/index.js -r lodash:underscore -r backdash:backbone -o test/browser/bundle.js -d",
-    "watch-test": "watchify test/browser/index.js -r lodash:underscore -r backdash:backbone -o test/browser/bundle.js -d -v",
-    "minify": "cat dist/sprintly.js | uglifyjs -cm > dist/sprintly.min.js ",
+    "build": "mkdir -p dist && browserify sprintly-data.js -o dist/sprintly.js -s sprintly",
+    "watch": "watchify sprintly-data.js -o dist/sprintly.js -s sprintly",
+    "build-test": "browserify test/browser/index.js -o test/browser/bundle.js -d",
+    "watch-test": "watchify test/browser/index.js -o test/browser/bundle.js -d -v",
+    "minify": "uglifyjs dist/sprintly.js -c -m -o dist/sprintly.min.js ",
     "prepublish": "npm run build && npm run minify"
   },
   "browserify": {
     "transform": [
+      "6to5ify",
       "envify"
     ]
   },
-  "description": "A JavaScript client for the sprint.ly CORS API",
+  "description": "JavaScript models and collections for the Sprintly API",
   "bugs": {
     "url": "https://github.com/sprintly/sprintly-data/issues"
   },
@@ -56,7 +57,8 @@
     "test": "test"
   },
   "keywords": [
-    "sdk"
+    "sdk",
+    "sprintly"
   ],
   "author": "Quick Left Team",
   "license": "BSD"
