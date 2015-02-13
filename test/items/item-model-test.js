@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import sinon from "sinon";
-import sprintly from "../../sprintly-data";
+import * as sprintly from "../..";
 import Comments from "../../lib/items/comments";
 import Item from "../../lib/items/item";
 

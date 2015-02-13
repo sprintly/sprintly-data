@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { assert } from "chai";
 import sinon from "sinon";
-import sprintly from "../../sprintly-data";
+import * as sprintly from "../..";
 import Items from "../../lib/items";
 import People from "../../lib/products/people";
 import Product from "../../lib/products/product";
