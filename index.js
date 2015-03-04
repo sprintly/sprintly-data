@@ -1,2 +1,2 @@
-require('6to5/register');
+require('babel/register');
 module.exports = require('./sprintly-data');
