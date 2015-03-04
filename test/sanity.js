@@ -1,6 +1,7 @@
 var chai = require('chai')
 var sprintly = require('../index');
 var chaiAsPromised = require("chai-as-promised");
+var assert = chai.assert;
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
@@ -16,28 +17,38 @@ var fixtures = {
 };
 
 describe('Sanity', function() {
+  this.timeout(5e3);
 
   before(function(){
-    this.client = sprintly.createClient(
-      process.env.SPRINTLY_EMAIL, process.env.SPRINTLY_API_KEY);
+    var email = process.env.SPRINTLY_EMAIL;
+    var apiKey = process.env.SPRINTLY_API_KEY;
 
-    this.product = this.client.products.add({ id: 22241 });
+    assert.ok(email, 'SPRINLTY_EMAIL is missing from environment');
+    assert.ok(apiKey, 'SPRINLTY_API_KEY is missing from environment');
+
+    this.client = sprintly.createClient(email, apiKey);
+    this.product = this.client.products.add({ id: 29125 });
   });
 
   it('product info', function() {
     return expect(this.product.fetch()).to.be.fulfilled;
   });
 
-  it('create & destroy item', function() {
-    var item = this.product.createItem(fixtures.item.task);
+  describe('create and destroy item', function() {
 
-    return item.save()
-      .then(function(model) {
-        return expect(item.destroy()).to.eventually.be.fulfilled;
-      });
+    before(function() {
+      this.item = this.product.createItem(fixtures.item.task);
+      return this.item.save();
+    });
+
+    it('destroys an item', function() {
+      return expect(this.item.destroy()).to.eventually.be.fulfilled;
+    });
+
   });
 
   describe('fetching items', function() {
+    this.timeout(5e3);
 
     before(function() {
       this.item = this.product.createItem(fixtures.item.task);
