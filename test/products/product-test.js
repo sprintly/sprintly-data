@@ -71,6 +71,7 @@ describe('Product Model', function() {
       });
 
       assert.equal(_.size(this.product._filters), 1);
+      assert.ok(this.product._filters.backlog);
       assert.strictEqual(items, this.items);
     });
   });
