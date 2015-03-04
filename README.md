@@ -1,10 +1,10 @@
 # Sprintly JavaScript SDK
 
-> A JavaScript client for the [Sprintly](https://sprint.ly/) [API](https://sprintly.uservoice.com/knowledgebase/topics/15784-api)
+> Models and Collections for the [Sprintly](https://sprint.ly/) [API](https://sprintly.uservoice.com/knowledgebase/topics/15784-api)
 
 [![wercker status](https://app.wercker.com/status/bc221f27cbc9fc9a53a2157d8c20dd09/m/master "wercker status")](https://app.wercker.com/project/bykey/bc221f27cbc9fc9a53a2157d8c20dd09)
 
-**v1.0.3**
+**v1.1.0**
 
 ## Installation
 
@@ -18,20 +18,28 @@ UMD bundle (AMD, global variable) is also available via npm install.
 
 ## Usage
 
-The Client takes and email and API key, and returns 2 Backbone collections.
+The Client takes and email and API key and returns a client object with
+a Products Collection and a User Model.
 
 ```javascript
 var sprintly = require('sprintly-data');
-sprintly.createClient(email, apiKey);
+var client = sprintly.createClient(email, apiKey);
 // => {
-//     VERSION: 1.0.1,
+//     VERSION: 1.1.0,
 //     products: [Backbone.Collection],
 //     user: [Backbone.Model]
 //   }
 ```
 
-The collections are returned empty, so you'll need to call `fetch` make
-a request to the API. This works just like `Backbone.Collection#fetch`.
+Alternately, you can provide an OAuth token:
+
+```javascript
+var client = sprintly.createClient({ token: 'xxxAbc123'});
+```
+
+These objects are "empty" when you first create them, so you'll need to
+call `fetch` make a request to the API. This works just like
+`Backbone.Collection#fetch`.
 
 ```javascript
 client.products.fetch();
@@ -65,6 +73,8 @@ myProduct.ItemModel
 ## API
 
 #### sprintly.createClient(email, apiKey)
+
+#### sprintly.createClient({ token: <Oauth Token> })
 
 ### Products
 
