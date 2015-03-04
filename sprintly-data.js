@@ -7,7 +7,7 @@ import bearerAuth from './lib/support/bearer-auth';
 import { VERSION } from './package.json';
 
 function Client(email, apiKey) {
-  if (typeof email !== 'string' && email.token) {
+  if (email && typeof email !== 'string' && email.token) {
     Backbone.ajax = bearerAuth(email.token);
   } else {
     Backbone.ajax = basicAuth(email, apiKey);
