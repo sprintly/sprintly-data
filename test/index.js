@@ -5,6 +5,7 @@ describe('slow', function() {
 describe('fast', function() {
   require('./products/product-test');
   require('./items/items-collection-test');
+  require('./items/items-query-config-test');
   require('./items/item-model-test');
   require('./items/comments-collection-test');
 });
