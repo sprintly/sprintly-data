@@ -76,6 +76,10 @@ myProduct.ItemModel
 
 #### sprintly.createClient({ token: <Oauth Token> })
 
+Create an instance of the sprintly-data client. This can be done with
+your username and API key, or with an OAuth token (NB: you will also need
+a client server to facilitate OAuth login.)
+
 ### Products
 
 #### client.products
