@@ -5,6 +5,7 @@ import * as sprintly from "../..";
 import Items from "../../lib/items";
 import People from "../../lib/products/people";
 import Product from "../../lib/products/product";
+import Tags from "../../lib/products/tags";
 
 describe('Product Model', function() {
 
@@ -32,6 +33,10 @@ describe('Product Model', function() {
 
     it('creates a members collection', function() {
       assert.instanceOf(this.product.members, People);
+    });
+
+    it('creates a tags collection', function() {
+      assert.instanceOf(this.product.tags, Tags);
     });
 
     it('creates a unique Item supermodel', function() {
