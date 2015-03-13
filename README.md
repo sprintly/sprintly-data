@@ -105,7 +105,7 @@ promise.progess(function () {
 
 #### product.items
 
-An instance of `Backbone.Collection` that contains all items that have
+A Backbone Collection that contains all items that have
 been fetched from the server
 
 #### product.getItemsByStatus(status)
@@ -116,6 +116,14 @@ and instance of `Backbone.Collection`.
 #### product.createItem(attrs, options)
 
 Create a new item. Return an instance of `product.ItemModel`.
+
+#### product.members
+
+A Backbone Collection for all of the users belonging to the product. Use `product.members.fetch()` to populate with data from the server.
+
+#### product.tags
+
+A Backbone Collecion with the Tags associated with the product. Use `products.tags.fetch()` to populated with data from the server.
 
 ## Development
 
