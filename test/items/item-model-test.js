@@ -61,6 +61,14 @@ describe('Item Model', function() {
     });
   });
 
+  describe('toJSON', function() {
+    it('outputs just the item number for `assigned_to` when { save: true }', function() {
+      var item = Item.create({ number: 51, assigned_to: { id: 1 } });
+      var json = item.toJSON({ save: true });
+      assert.equal(json.assigned_to, 1);
+    });
+  });
+
   describe('validation', function() {
     it('enforces clientside validation errors', function() {
       var item = this.product.createItem({
