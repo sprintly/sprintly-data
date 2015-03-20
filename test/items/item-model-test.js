@@ -62,10 +62,23 @@ describe('Item Model', function() {
   });
 
   describe('toJSON', function() {
-    it('outputs just the item number for `assigned_to` when { save: true }', function() {
-      var item = Item.create({ number: 51, assigned_to: { id: 1 } });
-      var json = item.toJSON({ save: true });
-      assert.equal(json.assigned_to, 1);
+    context('{ save: true }', function() {
+      beforeEach(function() {
+        var item = Item.create({
+          number: 51,
+          type: 'story',
+          assigned_to: { id: 1 }
+        });
+        this.json = item.toJSON({ save: true });
+      });
+
+      it('outputs just the item number for `assigned_to`', function() {
+        assert.equal(this.json.assigned_to, 1);
+      });
+
+      it('removes item.type', function() {
+        assert.isUndefined(this.json.type);
+      });
     });
   });
 
