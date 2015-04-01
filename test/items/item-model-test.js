@@ -104,6 +104,57 @@ describe('Item Model', function() {
     });
   });
 
+  describe('resort', function() {
+    beforeEach(function() {
+      this.server = sinon.fakeServer.create();
+      this.item = this.product.createItem({
+        number: 50,
+        product: {
+          id: 1
+        }
+      });
+      this.item.url = function() {
+        return '/products/1/items/50.json';
+      };
+    });
+
+    afterEach(function() {
+      this.server.restore();
+    });
+
+    it('returns a promise', function() {
+      this.server.respondWith(
+        'POST',
+        '/products/1/items/50/resort.json',
+        [
+          200,
+          { 'Content-Type': 'application/json' },
+          '{ "sort": 20000 }'
+        ]
+      );
+
+      var req = this.item.resort({ before: 2 });
+      this.server.respond();
+      return req;
+    });
+
+    it('rejects the promise if the server errors', function(done) {
+      this.server.respondWith(
+        'POST',
+        '/products/1/items/50.resort.json',
+        [500, {}, '']
+      );
+      this.item.resort({ before: 2 }).catch(function() {
+        done();
+      });
+      this.server.respond();
+    });
+
+    it('validates input', function() {
+      assert.throws(() => this.item.resort(), /must provide a value for before or after/);
+    });
+  });
+
 });
 
 
