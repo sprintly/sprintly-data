@@ -76,8 +76,17 @@ describe('Item Model', function() {
         assert.equal(this.json.assigned_to, 1);
       });
 
-      it('removes item.type', function() {
+      it('removes item.type only if item has a number', function() {
         assert.isUndefined(this.json.type);
+      });
+
+      it('perserves item.type for new items', function() {
+        var item = Item.create({
+          type: 'story',
+          assigned_to: { id: 1 }
+        });
+        var json = item.toJSON({ save: true });
+        assert.equal(json.type, 'story');
       });
     });
   });

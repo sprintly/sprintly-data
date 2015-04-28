@@ -4,7 +4,7 @@
 
 [![wercker status](https://app.wercker.com/status/bc221f27cbc9fc9a53a2157d8c20dd09/m/master "wercker status")](https://app.wercker.com/project/bykey/bc221f27cbc9fc9a53a2157d8c20dd09)
 
-**v1.3.0**
+**v1.3.1**
 
 ## Installation
 

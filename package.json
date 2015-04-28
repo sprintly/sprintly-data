@@ -1,6 +1,6 @@
 {
   "name": "sprintly-data",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "index.js",
   "browser": "sprintly-data.js",
   "repository": {
@@ -8,6 +8,7 @@
     "url": "http://github.com/sprintly/sprintly-data.git"
   },
   "dependencies": {
+    "@sprintly/supermodel": "0.0.4",
     "ampersand-dependency-mixin": "^0.2.3",
     "async": "^0.9.0",
     "babel": "^4.6.6",
@@ -17,8 +18,7 @@
     "envify": "^3.0.0",
     "lodash": "^2.4.1",
     "q": "^1.1.2",
-    "superagent": "^1.1.0",
-    "supermodel": "git://github.com/wookiehangover/supermodel.git"
+    "superagent": "^1.1.0"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
