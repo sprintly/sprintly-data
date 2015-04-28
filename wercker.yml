@@ -1,7 +1,7 @@
-box: wercker/nodejs
+box: zhevron/iojs
 build:
   steps:
     - npm-install
     - script:
         name: Unit Tests
-        code: npm run build-test && npm run gulp
+        code: npm run test-browser

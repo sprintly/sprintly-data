@@ -24,6 +24,7 @@
     "browserify": "^9.0.3",
     "chai": "^2.1.0",
     "chai-as-promised": "^4.1.1",
+    "es5-shim": "^4.1.1",
     "gulp": "^3.8.7",
     "gulp-jshint": "^1.9.0",
     "gulp-mocha": "^2.0.0",
@@ -35,6 +36,7 @@
   },
   "scripts": {
     "test": "mocha test",
+    "test-browser": "gulp test",
     "build": "mkdir -p dist && browserify sprintly-data.js -o dist/sprintly.js -s sprintly",
     "watch": "watchify sprintly-data.js -o dist/sprintly.js -s sprintly",
     "build-test": "browserify test/browser/index.js -o test/browser/bundle.js -d",
