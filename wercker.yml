@@ -1,7 +1,7 @@
-box: zhevron/iojs
+box: wercker/nodejs
 build:
   steps:
     - npm-install
     - script:
         name: Unit Tests
-        code: npm run test-browser
+        code: npm run build-test && npm run test-browser
