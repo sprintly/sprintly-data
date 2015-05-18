@@ -43,7 +43,7 @@ describe('Item Model', function() {
     });
 
     it('creates a parent item when updating a collection', function() {
-      var item = Item.create({ number: 51 });
+      var item = this.product.ItemModel.create({ number: 51 });
       var collection = this.product.createItemsCollection([], {});
 
       collection.add({ number: 51, parent: { number: 15 } });
@@ -87,6 +87,58 @@ describe('Item Model', function() {
         });
         var json = item.toJSON({ save: true });
         assert.equal(json.type, 'story');
+      });
+    });
+
+    context('sub_items', function() {
+      beforeEach(function() {
+        this.item = this.product.ItemModel.create({
+          number: 51,
+          type: 'story',
+          status: 'backlog'
+        });
+        this.subitem = this.product.ItemModel.create({
+          type: 'task', title: 'foo', status: 'backlog', number: 99, parent: 51
+        });
+      });
+
+      it('shows sub_items', function() {
+        let json = this.item.toJSON();
+        assert.deepEqual(json.sub_items[0], {
+          type: 'task', title: 'foo', status: 'backlog', number: 99, parent_id: 51
+        });
+      });
+
+      it('options { sub_items: false }', function() {
+        let json = this.item.toJSON({ sub_items: false });
+        assert.isUndefined(json.sub_items);
+      });
+    });
+
+    context('parent', function() {
+      beforeEach(function() {
+        this.product.ItemModel.create({
+          number: 51,
+          type: 'story',
+          status: 'backlog',
+        });
+        this.subitem = this.product.ItemModel.create({
+          type: 'task', title: 'foo', status: 'backlog', number: 99, parent: 51
+        });
+        this.json = this.subitem.toJSON();
+      });
+
+      it('shows a parent item', function() {
+        assert.deepEqual(this.json.parent, {
+          number: 51,
+          type: 'story',
+          status: 'backlog'
+        });
+      });
+
+      it('options { parent: false }', function() {
+        let json = this.subitem.toJSON({ parent: false });
+        assert.isUndefined(json.parent);
       });
     });
   });
