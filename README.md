@@ -195,3 +195,11 @@ Lint files
 ```bash
 $ gulp lint
 ```
+
+#### Internal Development Tools
+
+If you need to point to a non-production sprint.ly server you can set the following global variable before loading sprintly-data:
+
+```javascript
+var __sprintly_data_config = { BASE_URL: 'https://sprint.ly/api' };
+```
